@@ -1,0 +1,24 @@
+{
+  "name": "desafio-nodejs-lp4",
+  "version": "1.0.0",
+  "description": "Sistema de feedback de evolucao do colaborador. Sistema para o desafio de LP4 do EC 8. Grupo: Gabriel Gouveia, Rodrigo Emiliano e Lucas Costa.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabriel Gouveia, Rodrigo Emiliano e Lucas Costa",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^2.3.0",
+    "msnodesqlv8": "^2.6.0",
+    "mssql": "^9.0.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.20",
+    "tedious": "^15.1.0"
+  }
+}
