@@ -161,6 +161,10 @@ CREATE TABLE FEEDBACK
 	METAS VARCHAR(2000),
 	DATA_FEEDBACK DATETIME,
 	PRAZO_CUMPRIMENTO INT,
+    PONTOS_FORTES_MARKDOWN BIT,
+    PONTOS_FRACOS_MARKDOWN BIT,
+    ACOES_MARKDOWN BIT,
+    METAS_MARKDOWN BIT,
 	CONSTRAINT fk_RE_COLABORADOR_FEEDBACK FOREIGN KEY (RE_COLABORADOR)
 		REFERENCES COLABORADOR(RE)
 		ON DELETE CASCADE
@@ -1425,7 +1429,467 @@ INSERT INTO USUARIOS VALUES(1143, '1234', 'gestor', 28);
 INSERT INTO USUARIOS VALUES(1144, '1234', 'gestor', 29);
 INSERT INTO USUARIOS VALUES(1145, '1234', 'gestor', 30);
 
+INSERT INTO TREINAMENTO VALUES
+(
+1, 
+'Engenharia de Software', 
+'Aprenda DDD, TDD, ATDD e DDD. Aprenda diagrama de robustez e diagrama de usuários, além do diagrama de classes. Aprenda Scrum, Kanban, XP e modelo Spotfy',
+'Desenvolvimento de software',
+'2019-08-22 00:00:00',
+50,
+1,
+127,
+'2021-07-09',
+8
+);
 
+INSERT INTO TREINAMENTO VALUES
+(
+2, 
+'Qualidade de software', 
+'Conteúdos: Modelo 4+1, RM-ODP, ISO 20000, ISO 9001, requisitos não funcionais, testes unitários, de carga, de aceitação e integração.',
+'Desenvolvimento de software e QA',
+'2018-10-07 00:00:00',
+20,
+1,
+53,
+'2021-04-05',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+3, 
+'DevOps', 
+'Entenda a cultura DevOps, história, origem, CI e CD, pipelines, formas de deploy, boas práticas no Git...',
+'Desenvolvimento de software',
+'2020-04-11',
+17,
+1,
+205,
+'2021-03-10',
+6
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+4, 
+'ASP.NET CORE MVC', 
+'Aprenda: HTTP, HTTPS, Cliente-Servidor, padrão MVC, razor pages, tag helpers, selectList, armazenamento de imagens, CRUD com ASP.NET, acesso ao banco com ADO.NET, generics',
+'Desenvolvimento de software',
+'2021-02-04',
+63,
+1,
+507,
+'2022-10-09',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+5, 
+'Java Spring Boot', 
+'Aprenda: HTTP, HTTPS, Cliente-Servidor, padrão MVC, JPA, Hibernate, Spring MVC, Spring Security, Maven, Autenticação e Autorização (Filter)',
+'Desenvolvimento de software',
+'2022-02-05',
+58,
+1,
+425,
+'2022-10-09',
+9
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+6, 
+'MEAN Stack', 
+'Aprenda: HTTP, HTTPS, Cliente-Servidor, padrão MVC, Node.js, Express, Angular, MongoDB, Socket.io, Mongoose, MySQL, Knexjs, Sequelize, TinyMCE, CORS, Two way data binding',
+'Desenvolvimento de software',
+'2020-10-14',
+135,
+1,
+223,
+'2022-01-25',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+7, 
+'Curso completo de Front-End', 
+'Aprenda: HTML5, CSS3, Javascript, ECMAScript 6, ES7, ES8, Async/Await, Call-backs, Promises, Fetch API, Axios, SASS, LESS, Bootstrap, Bulma, Tailwind, Flex, Material Design',
+'Desenvolvimento de software',
+'2022-05-12',
+100,
+1,
+721,
+'2022-10-22',
+9
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+8, 
+'Curso de Angular', 
+'Aprenda: Como funciona o Angular, História do Angular, versões do Angular, data-binding, componentes, animações, formulários, diretivas, routing',
+'Desenvolvimento de software',
+'2022-05-17',
+38,
+1,
+303,
+'2022-10-22',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+9, 
+'Curso de React', 
+'Aprenda: Como funciona o React, NPM, Yarn, Boilerplate, Snowpack, Vite, Create React app, TypeScript, Componentes, Axios, React Hooks, SPA, Stale-While-Revalidate SWR, React Query, Redux, Nextjs',
+'Desenvolvimento de software',
+'2021-07-29',
+23,
+1,
+404,
+'2022-10-22',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+10, 
+'Python completo', 
+'Aprenda: História do Python, interpretadores, tipagem fraca e dinâmica, lógica de programação, orientação a objetos, pip, Python 3, NumPy, Pandas, Matplotlib, Flask',
+'Desenvolvimento de software',
+'2020-04-29',
+25,
+1,
+900,
+'2022-10-22',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+11, 
+'Inteligência artificial', 
+'Aprenda: Python 3, pip, NumPy, Pandas, Matplotlib, sistemas especialistas, heurísticas, busca gulosa, busca a estrela, lógica fuzzy, Machine Learning, Orange, Tensorflow, Deep Learning, Redes Neurais, Visão Computacional, OpenCV',
+'Desenvolvimento de software',
+'2019-03-19',
+39,
+1,
+43,
+'2021-01-02',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+12, 
+'Programação Mobile', 
+'Aprenda: React Native, Flutter, Dart, Android Studio, Xamarin.Forms e IONIC',
+'Desenvolvimento de software',
+'2020-06-11',
+120,
+1,
+87,
+'2022-05-04',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+13, 
+'Sistemas operacionais', 
+'Aprenda: Gerenciadores de processos, memória, arquivo e dispositivos. Deadlocks, Semáforos, FCFS, Round Robin, prioc, priop, swapping, paginação, memória virtual, bootstrap, assembly, C',
+'TI em geral',
+'2018-09-01',
+50,
+1,
+15,
+'2019-03-23',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+14, 
+'Mensageria', 
+'Aprenda: Apache Kafka, RabbitMQ, implementação com Java, consumidor, produtor, exchange, configurações, Mosquitto',
+'Desenvolvimento de software',
+'2017-05-03',
+15,
+1,
+92,
+'2020-01-30',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+15, 
+'Curso avançado em banco de dados', 
+'Aprenda: Dados, informações, conhecimento, modelagem de dados, relacionamento, MER, DER, 1FN, 2FN, 3FN, cardinalidade, entidades, SGBD, SQL Server, MySQL, Oracle, Postgre, MariaDB, DynamoDB, CosmosDB, DB2, SQL, DDL, DML, DQL, DTL, DCL, T-SQL, stored procedures, functions, triggers, views, joins, grant e revoke, transactions, cursores, PK, FK, chave candidata, index, tabela temporária, NOSQL, MongoDB, CouchDB, Redis',
+'Desenvolvimento de software e DBA',
+'2021-11-14',
+32,
+1,
+200,
+'2022-10-09',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+16, 
+'Curso completão de hardware', 
+'Aprenda: Eletrodinâmica, eletrônica analógica, eletrônica digital, microcontroladores, arduino, prototipagem de hardware, linguagem C, arquitetura de computadores, RISC e CISC, hierarquia de memórias, taxonomia de flynn, arquitetura de Harvard, arquitetura de Von Neumann, ULA, unidade de controle, funcionamento do processador genérico, núcleos, threads, clock, pipelines, assembly x86, ARM, Sparc, 8086, IEEE 754, ISA, PLD, FPGA, VHDL, Verilog, CMOS',
+'Engenharia',
+'2020-08-22',
+200,
+1,
+19,
+'2022-05-11',
+9
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+17, 
+'Curso de C', 
+'Aprenda: Lógica de programação, compiladores, ponteiros, funcionamento de memórias',
+'Desenvolvimento de software',
+'2021-12-02',
+93,
+1,
+15,
+'2022-05-11',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+18, 
+'Curso de Java', 
+'Aprenda: Lógica de programação, orientação a objetos, compiladores, JVM, JRE, JDK, Eclipse, IntelliJ, NetBeans, linguagem híbrida, bytecode, JEE, JBoss, Apache Tomcat, Servlet, threads, socket, acesso ao banco, CRUD, JPA, Hibernate, Spring Boot, Spark, Micronaut, Java Swing, JavaFX, JSP, Thymeleaf, EJB',
+'Desenvolvimento de software',
+'2017-12-03',
+670,
+1,
+70,
+'2022-08-16',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+19, 
+'Curso de C#', 
+'Aprenda: Gerações de linguagens de programação, lógica booleana, compiladores, tipagem forte e estática, tipagem fraca e dinâmica, lógica de programação, laços de repetição, condicionais, structs, entrada e saída, vetores, random, variáveis, tipos de dados, plataforma .NET, história do .NET, .NET Framework, .NET Core, .NET, .NET Standard, Visual Studio, Rider, Windows Forms, WPF, UWP, XAML, Mono, MAUI, Xamarin, orientação a objetos, ADO.NET, Entity Framework, Dapper, ASP.NET MVC, ASP.NET WEB API, Minimal APIs, JSON, XML, REST, SOAP, Razor pages, Blazor, SignalR, Serilog, Threads, Coleções, Generics, LINQ',
+'Desenvolvimento de software',
+'2022-10-03',
+1204,
+1,
+210,
+'2022-10-03',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+20, 
+'Redes de computadores', 
+'Aprenda: Modelo OSI, TCP IP, UDP, Protocolos ICMP, DHCP, HTTP, HTTP 1, HTTP 1.1, HTTP 2, HTTP 3, HTTPS, FTP, SFTP, Frame Ethernet, IEEE 802, Aloha, IEEE 802.3, IEEE 802.15.1, PAN, LAN, MAN, WAN, WPAN, WLAN, WMAN, WWAN, Wireless Fidelity, CSMA CA, CSMA CD, fibra ótica, crossover, switch, gateway, IPV4, IPV6, ARP, NETID, HOSTID, Classes de IPs, DNS, pacote, frame, sequência de bits, VLAN, STP, RIP, sub-redes, topologias, fragmentação, colisão',
+'TI em geral',
+'2018-07-07',
+1500,
+1,
+60,
+'2022-05-18',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+21, 
+'Segurança da informação', 
+'Aprenda: Redes de computadores, Man in the Middle, DDOS, Malwares, Phishing, criptografias, SHA-1, SHA-256, SHA-512, engenharia social, SSL, TLS, sniffers, keylogger, robôs, Ransomwares, força bruta, dicionários',
+'TI em geral',
+'2018-07-07',
+500,
+1,
+30,
+'2022-05-18',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+22, 
+'Compliance', 
+'Aprenda: Valores, visão e missão da empresa, código de conduta, guia anticorrupção',
+'Compliance',
+'2014-05-05',
+10,
+1,
+5000,
+'2018-12-18',
+4
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+23, 
+'Comportamento do consumidor', 
+'O curso apresentará como diversos fatores influenciam no comportamento do consumidor',
+'Marketing',
+'2016-06-05',
+10,
+1,
+35,
+'2018-12-13',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+24, 
+'Gestão de processos', 
+'O curso apresentará como o mapeamento e planejamento de processos é crucial em uma empresa',
+'Processos, administração',
+'2016-10-05',
+10,
+1,
+22,
+'2017-10-13',
+5
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+25, 
+'Comunicação', 
+'Aprenda a falar melhor em uma apresentação e falar melhor com o cliente.',
+'Todas',
+'2015-10-05',
+7,
+1,
+105,
+'2017-10-13',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+26, 
+'Programação CNC', 
+'Aprenda a usinar peças por meio de máquinas CNC, conhecendo os comandos e seus respectivos significados.',
+'Produção',
+'2016-02-05',
+15,
+1,
+105,
+'2017-10-13',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+27, 
+'Curso de qualidade', 
+'Aprenda as principais ferramentas da qualidade: FMEA, 10 princípios TQC, ISO 9001, DFMEA, 6 sigmas, Diagrama de Ishikawa, PDCA, controle estatístico do processo, poka-yoke',
+'Qualidade',
+'2017-09-15',
+15,
+1,
+100,
+'2019-03-16',
+7
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+28, 
+'Curso de controladores, sensores e atuadores', 
+'Aprenda: CLP, sensores, funcionamentos de sensores, encoders, controlador PID, sensor indutivo, sensor capacitivo, sensor ótico, sensor de ultrassom, linguagem ladder',
+'Manutenção, automação e produção',
+'2021-09-15',
+20,
+1,
+150,
+'2022-08-26',
+9
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+29, 
+'Alguns conceitos teóricos de soldagem', 
+'Aprenda: AWS American Welding Society, interpretação de desenhos de solda, símbolos de soldagem, solda em campo, solda em chanfro, solda em filete, MIG, MAG, TIG, tipos de gotejamento de solda, solda por pressão, solda por curto-circuito, eletrodo revestido, solda globular, solda por spray',
+'Manutenção, automação e produção',
+'2018-11-15',
+20,
+1,
+45,
+'2022-08-26',
+10
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+30, 
+'Segurança no trabalho', 
+'Aprenda: Normas Regulamentadoras, EPIs, EPCs, meio ambiente, CETESB',
+'Manutenção, automação e produção',
+'2016-03-05',
+5,
+1,
+25,
+'2018-08-21',
+6
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+31, 
+'Resistência dos materiais', 
+'Aprenda: Tipos de solicitação, tração, compressão, cisalhamento, torção, flexão, física estática, fisíca dinâmica, treliça, diagrama tensão-deformação, coeficiente de segurança, estamparia, ensaio de torso-flexão, momento torsor, momento fletor, varignon, critério de Tresca, critério de Von Mises, ductilidade, dureza, resiliência, tensão',
+'Manutenção, automação e pesquisa',
+'2016-03-05',
+30,
+1,
+38,
+'2018-08-21',
+8
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+32, 
+'LGPD', 
+'Entenda a Lei Geral de Proteção de Dados do Brasil e GRPD.',
+'TI em Geral e Jurídico',
+'2022-03-05',
+5,
+1,
+300,
+'2022-08-21',
+9
+);
+
+INSERT INTO TREINAMENTO VALUES
+(
+33, 
+'Leis trabalhistas', 
+'Tenha uma noção dos direitos e leis trabalhistas',
+'Todos',
+'2022-03-05',
+5,
+1,
+700,
+'2022-08-21',
+6
+);
 
 INSERT INTO Colaborador 
 VALUES
@@ -1450,18 +1914,128 @@ VALUES
     NULL
 );
 
--- INSERT INTO Beneficio
--- VALUES
--- (
-	-- NULL,
-    
--- );
+ INSERT INTO Beneficio
+ VALUES
+ (
+	 NULL,
+     1,
+     1,
+     1,
+     1,
+     'SULAMÉRICA',
+     NULL,
+     0,
+     0,
+     NULL
+ );
 
--- select * from Colaborador;
+UPDATE Colaborador SET ID_BENEFICIO = 25 WHERE RE = 1;
 
--- select * from Departamento;
+INSERT INTO FEEDBACK VALUES
+(
+	NULL,
+    1,
+    1124,
+    'O Diogo apresenta bom trabalho em equipe, boa comunicação e foco. Essas são as suas soft skills. Sobre as hard skills, o Diogo é bom com orientação a objetos, programação assíncrona e entende de alguns conceitos de redes.',
+    'O Diogo não possui muito conhecimento em segurança, arquitetura e metodologias. Ele precisa aprimorar-se principalmente em conceitos de planejamento de software.',
+    'Espera-se que o Diogo aprenda sobre os conceitos abordados nos pontos fracos através de treinamentos fornecidos e vivência no dia a dia.',
+    'A meta é que o Diogo apresente uma evolução em suas habilidades de planejamento para poder integrar ao time de arquitetura de software',
+    '2022-01-20 00:00:00',
+    12,
+    0,
+    0,
+    0,
+    0
+);
 
--- select * from beneficio;
+INSERT INTO PLANO_EVOLUCAO
+VALUES
+(
+NULL,
+1,
+'2022-01-20',
+'2023-01-20',
+'Sobre o plano de evolução, a meta é que o Diogo acompanhe os treinamentos atribuidos e os ponha em prática no dia a dia.',
+1
+);
+
+INSERT INTO GRUPO_TREINAMENTOS
+VALUES
+(
+NULL,
+1,
+1,
+1,
+3,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+1,
+0,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL
+);
+
+INSERT INTO HISTORICO
+VALUES
+(
+1,
+1,
+7,
+'TI - Suporte',
+'Analista de suporte I',
+'2018-09-09',
+'2021-08-12',
+35
+);
+
+INSERT INTO HISTORICO
+VALUES
+(
+2,
+1,
+3,
+'TI - Desenvolvimento',
+'Desenvolvedor júnior',
+'2021-08-13',
+NULL,
+14
+);
+
+UPDATE Colaborador SET ID_FEEDBACK = 1 WHERE RE = 1;
+
+
+
+ -- select * from Colaborador;
+
+ -- select * from Departamento;
+
+ -- select * from beneficio;
+ 
+ -- select * from TREINAMENTO;
+ 
+ -- select * from FEEDBACK;
 
 
 
