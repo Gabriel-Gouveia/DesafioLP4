@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Feedback de colaboradores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="author" content="Gabriel Gouveia, Rodrigo Emiliano e Lucas Santos - EC 8">
+    <meta name="description" content="Sistema de feedback de colaboradores - Desafio de LP4">
+    <meta name="copyright" content="© copyright 2022, Faculdade Engenheiro Salvador Arena">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../Styles/feedback.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    <!-- https://stackoverflow.com/questions/53945888/markdown-to-html-javascript -->
+</head>
+
+<body class="gradient">
+    <aside>
+        <nav>
+            <ul>
+                <br>
+                <p style="color: white; padding-left: 30px; font-size: 25px;">Bem-vindo(a)!</p>
+                <br>
+                <li>
+                    <a href="./index.html">
+                        <p>Home</p>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <p>Tutorial</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main id="mainTag">
+
+
+    </main>
+</body>
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+
+        let token = sessionStorage.getItem("token");
+        fetch('http://localhost:4444/api/v1/verifyAuth//checkAuthentication', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(json => {
+                if (json.msg == 'Tudo certo!') {
+                    sessionStorage.setItem("RELogado", json.re);
+                    sessionStorage.setItem("Role", json.role);
+                    sessionStorage.setItem("Departamento", json.departamento);
+
+                    if (json.role == 'adm' || json.role == 'gestor') {
+
+                        if (sessionStorage.getItem('idPassado').substring(1) == 'null') {
+                            window.location.href = './feedbackCadastro.html';
+                        }
+
+                        else {
+                            desenhaTelaParaGestor(token);
+                        }
+                    }
+
+                    else {
+                        desenhaTelaParaComum();
+                    }
+                    return;
+                }
+                else {
+                    window.location.href = './authError.html';
+                }
+            })
+            .catch(erro => {
+                console.log(erro);
+                window.location.href = './authError.html';
+            })
+
+    }, false);
+
+    function desenhaTelaParaGestor(token) {
+        let re = sessionStorage.getItem('RELogado');
+        let reClicado = sessionStorage.getItem('colaboradorClicado');
+        h3 = document.createElement('h3');
+        h3.innerText = 'Feedback para o colaborador de RE: ' + reClicado;
+
+        let main = document.getElementById('mainTag');
+        main.appendChild(h3);
+        main.appendChild(document.createElement('br'));
+        main.appendChild(document.createElement('br'));
+
+        let row1 = document.createElement('div');
+        row1.className = 'row';
+        row1.style.marginLeft = '230px';
+
+
+        let col1 = document.createElement('div');
+        col1.className = 'col-sm-1';
+
+        let btnEditar = document.createElement('a');
+        btnEditar.role = 'button';
+        btnEditar.className = 'btn btn-warning';
+        btnEditar.innerText = 'Editar';
+        btnEditar.id = 'btnEditar';
+
+        col1.appendChild(btnEditar);
+
+        let col2 = document.createElement('div');
+        col2.className = 'col-sm-1';
+
+        let btnExcluir = document.createElement('a');
+        btnExcluir.role = 'button';
+        btnExcluir.className = 'btn btn-danger';
+        btnExcluir.innerText = 'Excluir';
+        btnExcluir.id = 'btnExcluir';
+        btnExcluir.addEventListener('click', () => { excluirFeedback(token) });
+
+        col2.appendChild(btnExcluir);
+
+        row1.appendChild(col1);
+
+        row1.appendChild(col2);
+
+        main.appendChild(row1);
+
+        main.appendChild(document.createElement('br'));
+
+        let card = document.createElement('div');
+        card.className = 'card';
+        card.style.marginLeft = '15%';
+        card.style.width = '1100px';
+
+        let cardHeader = document.createElement('div');
+        cardHeader.className = 'card-header';
+        cardHeader.style.fontSize = '25px';
+        cardHeader.style.fontWeight = 'bold';
+        cardHeader.innerText = 'Feedback do gestor de RE ' + re + ' para o colaborador de RE ' + reClicado;
+
+        card.appendChild(cardHeader);
+
+        let cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+
+        let h4Metas = document.createElement('h4');
+        h4Metas.innerText = 'Metas';
+
+        let hrMetas = document.createElement('hr');
+
+        let dado = sessionStorage.getItem('idPassado').substring(1)
+
+        console.log(dado);
+
+        fetch('http://localhost:4444/api/v1/feedbacks/consultar/' + dado, {
+            method: 'GET'
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(json => {
+                cardBody.appendChild(h4Metas);
+                cardBody.appendChild(hrMetas);
+
+                let pMETAS = document.createElement('p');
+                pMETAS.innerText = json[0].METAS;
+
+                cardBody.appendChild(pMETAS);
+                cardBody.appendChild(document.createElement('br'));
+                cardBody.appendChild(document.createElement('br'));
+
+                let h4Acoes = document.createElement('h4');
+                h4Acoes.innerText = 'Ações esperadas';
+
+                let hrAcoes = document.createElement('hr');
+
+                cardBody.appendChild(h4Acoes);
+                cardBody.appendChild(hrAcoes);
+
+                let pACOESESPERADAS = document.createElement('p');
+                pACOESESPERADAS.innerText = json[0].ACOES_ESPERADAS;
+
+                cardBody.appendChild(pACOESESPERADAS);
+                cardBody.appendChild(document.createElement('br'));
+                cardBody.appendChild(document.createElement('br'));
+
+                let h4Fortes = document.createElement('h4');
+                h4Fortes.innerText = 'Pontos fortes';
+
+                let hrFortes = document.createElement('hr');
+
+                cardBody.appendChild(h4Fortes);
+                cardBody.appendChild(hrFortes);
+
+                let pPONTOSFORTES = document.createElement('p');
+                pPONTOSFORTES.innerText = json[0].PONTOS_FORTES;
+
+                cardBody.appendChild(pPONTOSFORTES);
+                cardBody.appendChild(document.createElement('br'));
+                cardBody.appendChild(document.createElement('br'));
+
+                let h4Fracos = document.createElement('h4');
+                h4Fracos.innerText = 'Pontos fracos';
+
+                let hrFracos = document.createElement('hr');
+
+                cardBody.appendChild(h4Fracos);
+                cardBody.appendChild(hrFracos);
+
+                let pPONTOSFRACOS = document.createElement('p');
+                pPONTOSFRACOS.innerText = json[0].PONTOS_FRACOS;
+
+                cardBody.appendChild(pPONTOSFRACOS);
+                cardBody.appendChild(document.createElement('br'));
+                cardBody.appendChild(document.createElement('br'));
+                cardBody.appendChild(document.createElement('br'));
+
+                let pFeedback = document.createElement('p');
+                pFeedback.style.fontSize = '18px';
+                let pPrazo = document.createElement('p');
+                pPrazo.style.fontSize = '18px';
+
+                let dataAgora = new Date();
+
+                pFeedback.innerText = 'Feedback feito em: ' + dataAgora.getDate() + '/' + dataAgora.getMonth() + '/' + dataAgora.getFullYear();
+
+                pPrazo.innerText = 'Prazo para cumprimento: ' + json[0].PRAZO_CUMPRIMENTO + ' meses';
+
+                cardBody.appendChild(pFeedback);
+                cardBody.appendChild(pPrazo);
+
+                card.appendChild(cardBody);
+
+                main.appendChild(card);
+                main.appendChild(document.createElement('br'));
+                main.appendChild(document.createElement('br'));
+                main.appendChild(document.createElement('br'));
+                main.appendChild(document.createElement('br'));
+                main.appendChild(document.createElement('br'));
+            })
+            .catch(erro => {
+                console.log(erro);
+            })
+    }
+
+    function excluirFeedback(token) {
+        if (confirm("Tem certeza que deseja excluir o feedback?") == true) {
+
+            let id = sessionStorage.getItem('idPassado').substring(1);
+
+            fetch('http://localhost:4444/api/v1/feedbacks/deletar/' + id, {
+                method: 'DELETE', 
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(resposta => {
+                    if (resposta.status == 200) {                        
+                        sessionStorage.setItem('idPassado', 'fnull');
+                        window.location.href = './feedbackExcluido.html';
+                    }
+
+                    else {
+                        alert('Ocorreu um erro ao deletar: ' + resposta.body);
+                    }
+                })
+                .catch(erro => { console.log(erro) });
+        } else {
+            return;
+        }
+    }
+
+</script>
+
+</html>
