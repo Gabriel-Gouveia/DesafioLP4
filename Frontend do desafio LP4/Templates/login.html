@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Feedback de colaboradores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="author" content="Gabriel Gouveia, Rodrigo Emiliano e Lucas Santos - EC 8">
+    <meta name="description" content="Sistema de feedback de colaboradores - Desafio de LP4">
+    <meta name="copyright" content="© copyright 2022, Faculdade Engenheiro Salvador Arena">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../Styles/login.css">
+    <!-- <script src="../Scripts/login.js"></script> -->
+</head>
+
+<body style="background: linear-gradient(90deg, rgba(2,0,36,1) 24%, rgba(9,9,121,1) 100%, rgba(0,212,255,1) 100%);">
+    <div class="container">
+        <div class="loginBox">
+            <br>
+            <h3 class="cabecalho">Feedback de colaboradores</h3>
+            <br>
+            <form>
+                <br>
+                <label class="form-label">RE: </label>
+                <br>
+                <input type="text" class="form-control" id="txtRe" required>
+                <br>
+                <br>
+                <label class="form-label">Senha: </label>
+                <br>
+                <input type="password" class="form-control rounded-right" id="txtSenha" required>
+                <br>
+                <br>
+                <div class="spinner-border text-light" role="status" id="whiteSpinner" style="display: none;">
+                    <span class="sr-only"></span>
+                </div>
+                <input type="submit" class="btnLogin color-gradient" value="Login" onclick="autenticar()" id="btnLogin">
+                <br>
+                <br>
+            </form>
+        </div>
+        <br>
+        <span id="msg" class="errorMsg"></span>
+        <br>
+    </div>
+</body>
+<script>
+
+    function autenticar() {
+
+        document.getElementById('msg').innerText = '';
+
+        let re = document.querySelector("input[type=text]").value;
+        let senha = document.querySelector("input[type=password]").value;
+
+        if (re == '' || senha == '') {
+            return;
+        }
+
+        document.querySelector("input[type=text]").value = '';
+        document.querySelector("input[type=password]").value = '';
+        document.querySelector("input[type=submit]").style.display = 'none';
+        document.querySelector("#whiteSpinner").style.display = 'block';
+        document.querySelector("#whiteSpinner").style.marginLeft = '45%';
+
+        event.preventDefault();
+
+        let dados = { RE: re, SENHA: senha }
+        fetch('http://localhost:4444/api/v1/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+            .then(resposta => {
+
+                if (resposta.status == 400) {
+                    document.getElementById('msg').innerText = 'Ocorreu um erro :/';
+                    document.querySelector("input[type=submit]").style.display = 'block';
+                    document.querySelector("#whiteSpinner").style.display = 'none';
+                    return;
+                }
+
+                if (resposta.status == 401) {
+                    document.getElementById('msg').innerText = 'Credenciais inválidas!';
+                    document.querySelector("input[type=submit]").style.display = 'block';
+                    document.querySelector("#whiteSpinner").style.display = 'none';
+                    return;
+                }
+
+                if (resposta.status == 404) {
+                    document.getElementById('msg').innerText = 'O RE enviado não existe na base de dados.';
+                    document.querySelector("input[type=submit]").style.display = 'block';
+                    document.querySelector("#whiteSpinner").style.display = 'none';
+                    return;
+                }
+
+                if (resposta.status == 500) {
+                    document.getElementById('msg').innerText = 'Ocorreu algum erro no servidor :/';
+                    document.querySelector("input[type=submit]").style.display = 'block';
+                    document.querySelector("#whiteSpinner").style.display = 'none';
+                    return;
+                }
+
+                return resposta.json();
+            })
+            .then(json => {
+                let token = json.token;
+
+                if (token != '') {
+                    sessionStorage.setItem("token", token);
+                    window.location.href = './index.html';
+                }
+                console.log(json);
+            })
+            .catch(erro => {
+                console.log(erro);
+            })
+    }
+</script>
+
+</html>

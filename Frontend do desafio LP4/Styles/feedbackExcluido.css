@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+aside {
+    position: absolute;
+    margin-left: 0%;
+    height: 100%;
+    width: 300px;
+    background-color: crimson;
+    border-radius: 0px 15px 15px 0px;
+}
+
+aside ul {
+    padding-left: 0px;
+    padding-top: 100px;
+    list-style-type: none;
+}
+
+aside ul li:hover {
+    background-color: rgb(245, 78, 111);
+    cursor: pointer;
+}
+
+aside ul li a {
+    text-decoration: none;
+    font-size: 25px;
+}
+
+aside ul li a p {
+    padding-left: 30px;
+    color: aliceblue;
+}
+
+main {
+    margin-left: 300px;
+    padding-top: 3%;
+}
+
+main h3 {
+    /* margin-left: 500px; */
+    padding-top: 5%;
+    color: aliceblue;
+    font-size: 36px;
+
+}
+
+.gradient {
+    background: linear-gradient(90deg, rgba(21, 17, 92, 1) 14%, rgba(134, 71, 222, 1) 100%, rgba(0, 212, 255, 1) 100%);
+}
