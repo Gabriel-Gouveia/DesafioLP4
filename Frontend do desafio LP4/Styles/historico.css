@@ -49,25 +49,3 @@ main h3 {
 .gradient {
     background: linear-gradient(90deg, rgba(21, 17, 92, 1) 14%, rgba(134, 71, 222, 1) 100%, rgba(0, 212, 255, 1) 100%);
 }
-
-
-textarea {
-    margin-left: 400px;
-    border-radius: 20px;
-    background-color: aliceblue;
-    padding-left: 20px;
-    padding-top: 15px;
-    padding-right: 20px;
-    padding-bottom: 15px;
-    overflow: auto;
-}
-
-textarea:focus {
-    border-color: darkturquoise;
-    box-shadow: 10px 10px darkturquoise;
-}
-
-textarea:hover {
-    border-color: darkturquoise;
-    box-shadow: 10px 10px darkturquoise;
-}
