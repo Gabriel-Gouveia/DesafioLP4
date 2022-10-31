@@ -2025,7 +2025,28 @@ NULL,
 
 UPDATE Colaborador SET ID_FEEDBACK = 1 WHERE RE = 1;
 
-
+INSERT INTO Colaborador 
+VALUES
+(
+	2,
+    'Ângela Neves',
+    '1990-08-10',
+    '333453566',
+    '9001',
+    'Desenvolvedora pleno',
+    3,
+    '2018-07-12',
+    '8117-1301',
+    4,
+    'São Paulo, Bras, Rua dos Limões, 808',
+    32,
+    5500,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+);
 
  -- select * from Colaborador;
 
