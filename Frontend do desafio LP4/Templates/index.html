@@ -230,6 +230,29 @@
         return td;
     }
 
+    document.addEventListener('keydown', (event) => {
+        let txtPesquisa = document.getElementById('pesquisa');
+        if (event.keyCode == 13 && document.activeElement == txtPesquisa){
+            let table = document.querySelector('table');
+            table.innerHTML = '';
+
+            fetch('http://localhost:4444/api/v1/colaboradores/consultar/' + txtPesquisa.value, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(json => {
+                desenhaTabelaGestor(json);
+            })
+            .catch(erro => { console.log(erro); });
+
+        }
+    });
+
 </script>
 
 </html>
