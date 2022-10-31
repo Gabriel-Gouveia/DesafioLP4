@@ -127,7 +127,10 @@ router.put('/alterar', middlewareAutenticacao, (req, res) => {
         ENDERECO: req.body.ENDERECO,
         IDADE: req.body.IDADE,
         SALARIO: req.body.SALARIO,
-        ID_BENEFICIO: req.body.ID_BENEFICIO
+        ID_BENEFICIO: req.body.ID_BENEFICIO,
+        ID_TREINAMENTO: req.body.ID_TREINAMENTO,
+        ID_FEEDBACK: req.body.ID_FEEDBACK,
+        ID_PLANOEVOLUCAO: req.body.ID_PLANOEVOLUCAO
     })
         .then(rows => {
             if (rows <= 0) {

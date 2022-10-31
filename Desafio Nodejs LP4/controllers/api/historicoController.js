@@ -30,6 +30,28 @@ router.get('/consultar/:id', (req, res) => {
         });
 });
 
+router.get('/consultarPorRE/:id', (req, res) => {
+
+    let id = parseInt(req.params.id);
+    dao.consultarUmRE(id)
+        .then(historico => {
+            if (historico == null) {
+                res.send("Histórico não encontrado para o RE " + id).status(404);
+            }
+
+            else if (Object.entries(historico).length === 0) {
+                res.send("Histórico não encontrado para o RE " + id).status(404);
+            }
+            else {
+                res.send(historico).status(200);
+            }
+        })
+        .catch(erro => {
+            console.log(erro);
+            res.send(erro);
+        });
+});
+
 router.get('/consultar', (req, res) => {
     dao.consultarTodos()
         .then(historicos => {

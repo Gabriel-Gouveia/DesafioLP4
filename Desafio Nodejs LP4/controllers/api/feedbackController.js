@@ -60,7 +60,7 @@ router.post('/inserir', (req, res) => {
         PONTOS_FRACOS: req.body.PONTOS_FRACOS,
         ACOES_ESPERADAS: req.body.ACOES_ESPERADAS,
         METAS: req.body.METAS,
-        DATA_FEEDBACK: req.body.DATA_FEEDBACK,
+        DATA_FEEDBACK: req.body.DATA_FEEDBACK.substring(0, 10),
         PRAZO_CUMPRIMENTO: req.body.PRAZO_CUMPRIMENTO
     };
 
@@ -90,8 +90,12 @@ router.put('/alterar', middlewareAutenticacao, (req, res) => {
         PONTOS_FRACOS: req.body.PONTOS_FRACOS,
         ACOES_ESPERADAS: req.body.ACOES_ESPERADAS,
         METAS: req.body.METAS,
-        DATA_FEEDBACK: req.body.DATA_FEEDBACK,
-        PRAZO_CUMPRIMENTO: req.body.PRAZO_CUMPRIMENTO
+        DATA_FEEDBACK: req.body.DATA_FEEDBACK.substring(0, 10),
+        PRAZO_CUMPRIMENTO: req.body.PRAZO_CUMPRIMENTO,
+        PONTOS_FORTES_MARKDOWN: PONTOS_FORTES_MARKDOWN,
+        PONTOS_FRACOS_MARKDOWN: PONTOS_FRACOS_MARKDOWN,
+        ACOES_MARKDOWN: ACOES_MARKDOWN,
+        METAS_MARKDOWN: METAS_MARKDOWN
     })
         .then(rows => {
             if (rows <= 0) {
