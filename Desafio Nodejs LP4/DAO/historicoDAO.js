@@ -12,6 +12,10 @@ export function consultarUm(id) {
     return database.select().where({ ID: id }).table('HISTORICO');
 }
 
+export function consultarUmRE(id) {
+    return database.select().where({ RE_COLABORADOR: id }).table('HISTORICO');
+}
+
 export function deletar(id) {
     return database.where({ ID: id }).delete().table('HISTORICO');
 }
