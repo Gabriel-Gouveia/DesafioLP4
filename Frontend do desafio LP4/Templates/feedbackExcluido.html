@@ -28,6 +28,11 @@
                         <p>Tutorial</p>
                     </a>
                 </li>
+                <li>
+                    <a href="./feedbackCadastro.html">
+                        <p>Cadastrar feedback</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>
@@ -63,8 +68,6 @@
                             dados[0].ID_FEEDBACK = null;
                             dados[0].NASCIMENTO = dados[0].NASCIMENTO.toString().substring(0, 10);
                             dados[0].DATA_ENTRADA = dados[0].DATA_ENTRADA.toString().substring(0, 10);
-
-                            console.log(dados[0].NASCIMENTO);
 
                             fetch('http://localhost:4444/api/v1/colaboradores/alterar', {
                                 method: 'PUT',

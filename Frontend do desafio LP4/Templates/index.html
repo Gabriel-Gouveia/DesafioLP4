@@ -16,7 +16,26 @@
 
 <body class="gradient">
     <aside>
-
+        <nav>
+            <ul>
+                <br>
+                <li>
+                    <a href="./index.html">
+                        <p>Home</p>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <p>Tutorial</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="./feedbackCadastro.html">
+                        <p>Cadastrar feedback</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </aside>
     <main id="mainTag">
         <h3 style="text-align: center; display: none;" id="h3Main">Colaboradores do seu departamento:</h3>
@@ -141,7 +160,7 @@
             let RELogado = sessionStorage.getItem('RELogado');
 
             if (colaborador.RE != RELogado) {
-                
+
                 let tr = document.createElement('tr');
                 let th = desenhaTh('row', colaborador.RE);
                 let tdNome = desenhaTd(colaborador.NOME);
@@ -152,11 +171,11 @@
                 let tdAnosEmpresa = desenhaTd(colaborador.ANOS_EMPRESA);
                 let tdIdade = desenhaTd(colaborador.IDADE);
                 let tdSalario = desenhaTd(colaborador.SALARIO);
-                let tdBeneficios = desenhaTdAnchor('./beneficios.html', 'Ver benefícios', 'b' + colaborador.ID_BENEFICIO);
-                let tdTreinamentos = desenhaTdAnchor('./treinamentos.html', 'Ver treinamentos', 't' + colaborador.ID_TREINAMENTO);
-                let tdPlano = desenhaTdAnchor('./plano.html', 'Ver plano', 'P' + colaborador.ID_PLANOEVOLUCAO);
-                let tdHistorico = desenhaTdAnchor('./historico.html', 'Ver histórico', 'h' + colaborador.ID_HISTORICO);
-                let tdFeedback = desenhaTdAnchor('./feedback.html', 'Ver feedback', 'f' + colaborador.ID_FEEDBACK);
+                let tdBeneficios = desenhaTdAnchor('./beneficios.html', 'Ver benefícios', 'b' + colaborador.ID_BENEFICIO, colaborador);
+                let tdTreinamentos = desenhaTdAnchor('./treinamentos.html', 'Ver treinamentos', 't' + colaborador.ID_TREINAMENTO, colaborador);
+                let tdPlano = desenhaTdAnchor('./plano.html', 'Ver plano', 'P' + colaborador.ID_PLANOEVOLUCAO, colaborador);
+                let tdHistorico = desenhaTdAnchor('./historico.html', 'Ver histórico', 'h' + colaborador.ID_HISTORICO, colaborador);
+                let tdFeedback = desenhaTdAnchor('./feedback.html', 'Ver feedback', 'f' + colaborador.ID_FEEDBACK, colaborador);
 
                 tr.appendChild(th);
                 tr.appendChild(tdNome);
@@ -197,7 +216,7 @@
         return td;
     }
 
-    function desenhaTdAnchor(href, texto, id) {
+    function desenhaTdAnchor(href, texto, id, colaborador) {
         //let aux = id.substring(1);       
         let td = document.createElement('td');
         let anchor = document.createElement('a');
@@ -206,7 +225,7 @@
         anchor.className = 'btn btn-outline-primary';
         anchor.innerText = texto;
         anchor.setAttribute('data-id', id);
-        anchor.addEventListener('click', () => { sessionStorage.setItem('idPassado', id); });
+        anchor.addEventListener('click', () => { sessionStorage.setItem('idPassado', id); sessionStorage.setItem('colaboradorClicado', colaborador.RE)});
         td.appendChild(anchor);
         return td;
     }

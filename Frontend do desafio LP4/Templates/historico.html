@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Feedback de colaboradores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="author" content="Gabriel Gouveia, Rodrigo Emiliano e Lucas Santos - EC 8">
+    <meta name="description" content="Sistema de feedback de colaboradores - Desafio de LP4">
+    <meta name="copyright" content="© copyright 2022, Faculdade Engenheiro Salvador Arena">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../Styles/beneficios.css">
+</head>
+
+<body class="gradient">
+    <aside>
+        <nav>
+            <ul>
+                <br>
+                <li>
+                    <a href="./index.html">
+                        <p>Home</p>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <p>Tutorial</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="./feedbackCadastro.html">
+                        <p>Cadastrar feedback</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main id="mainTag">
+        <h3 style="text-align: center; display: block; color: aliceblue;" id="h3Main">Histórico do colaborador de RE:</h3>
+        <br>
+        <br>
+
+    </main>
+</body>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+
+        let token = sessionStorage.getItem("token");
+        fetch('http://localhost:4444/api/v1/verifyAuth//checkAuthentication', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(json => {
+                if (json.msg == 'Tudo certo!') {
+                    sessionStorage.setItem("RELogado", json.re);
+                    sessionStorage.setItem("Role", json.role);
+                    sessionStorage.setItem("Departamento", json.departamento);
+
+                    if (json.role == 'adm' || json.role == 'gestor') {
+                        desenhaTelaParaGestor();
+                    }
+                    return;
+                }
+                else {
+                    window.location.href = './authError.html';
+                }
+            })
+            .catch(erro => {
+                console.log(erro);
+                window.location.href = './authError.html';
+            })
+
+    }, false);
+
+    function desenhaTelaParaGestor() {
+
+        let colaboradorClicado = sessionStorage.getItem('colaboradorClicado');
+        fetch('http://localhost:4444/api/v1/historicos/consultarPorRE/' + colaboradorClicado, {
+            method: 'GET'
+        })
+            .then(resposta => { return resposta.json(); })
+            .then(json => {
+                console.log();
+                desenhaTabelaGestor(json, colaboradorClicado);
+            })
+            .catch(erro => { console.log(erro); });
+    }
+
+    function desenhaTabelaGestor(json, colaboradorClicado) {
+        let h3Main = document.getElementById('h3Main');
+
+        h3Main.innerText = 'Histórico do colaborador de RE ' + colaboradorClicado;
+
+        let main = document.getElementById('mainTag');
+        let table = document.createElement('table');
+        table.className = 'table table-hover table-light';
+        table.style.width = '1200px';
+        table.style.marginTop = '2%';
+        table.style.marginLeft = '10%';
+
+        let thead = document.createElement('thead');
+        let trthead = document.createElement('tr');
+
+        trthead.appendChild(desenhaTh('col', 'ID'));
+        trthead.appendChild(desenhaTh('col', 'RE do colaborador'));
+        trthead.appendChild(desenhaTh('col', 'ID do departamento'));
+        trthead.appendChild(desenhaTh('col', 'Nome do departamento'));
+        trthead.appendChild(desenhaTh('col', 'Cargo'));
+        trthead.appendChild(desenhaTh('col', 'Data de início'));
+        trthead.appendChild(desenhaTh('col', 'Data de fim'));
+        trthead.appendChild(desenhaTh('col', 'Tempo total'));
+
+        thead.appendChild(trthead);
+
+        table.appendChild(thead);
+
+        let tbody = document.createElement('tbody');
+
+        let dados = json;
+
+        dados.forEach((historico, i) => {
+
+            let tr = document.createElement('tr');
+            let th = desenhaTh('row', historico.ID);
+            let tdRE = desenhaTd(historico.RE_COLABORADOR);
+            let tdIDDepartamento = desenhaTd(historico.ID_DEPARTAMENTO);
+            let tdNomeDepartamento = desenhaTd(historico.NOME_DEPARTAMENTO);
+            let tdCargo = desenhaTd(historico.CARGO);
+            let tdInicio = desenhaTd(historico.DATA_INICIO);
+            let tdFim = desenhaTd(historico.DATA_FIM);
+            let tdTotal = desenhaTd(historico.TEMPO_TOTAL + ' meses');
+
+            tr.appendChild(th);
+            tr.appendChild(tdRE);
+            tr.appendChild(tdIDDepartamento);
+            tr.appendChild(tdNomeDepartamento);
+            tr.appendChild(tdCargo);
+            tr.appendChild(tdInicio);
+            tr.appendChild(tdFim);
+            tr.appendChild(tdTotal);
+
+            tbody.appendChild(tr);
+
+        });
+
+        table.appendChild(tbody);
+        main.appendChild(table);
+    }
+
+    function desenhaTh(scope, texto) {
+        let th = document.createElement('th');
+        th.setAttribute('scope', scope);
+        th.innerText = texto;
+        return th;
+    }
+
+    function desenhaTd(texto) {
+        let td = document.createElement('td');
+        td.innerText = texto;
+        return td;
+    }
+
+
+</script>
+
+</html>

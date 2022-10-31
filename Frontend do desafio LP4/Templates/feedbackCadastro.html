@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Feedback de colaboradores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="author" content="Gabriel Gouveia, Rodrigo Emiliano e Lucas Santos - EC 8">
+    <meta name="description" content="Sistema de feedback de colaboradores - Desafio de LP4">
+    <meta name="copyright" content="© copyright 2022, Faculdade Engenheiro Salvador Arena">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../Styles/feedbackCadastro.css">
+</head>
+
+<body class="gradient">
+    <aside>
+        <nav>
+            <ul>
+                <br>
+                <li>
+                    <a href="./index.html">
+                        <p>Home</p>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <p>Tutorial</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="./feedbackCadastro.html">
+                        <p>Cadastrar feedback</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <h3 style="text-align: center;" id="title">Escreva um feedback para o colaborador<br> <br>
+        </h3>
+        <label for="txtRE" style="margin-left: 385px; color: aliceblue">RE:</label>
+            <input type="text"
+                class="form-control" style="margin-left: 385px; width: 100px;" id="txtRE">
+        <br>
+        <br>
+        <br>
+        <label style="color: aliceblue; margin-left: 400px; font-size: 30px;">Metas: </label>
+        <br>
+        <br>
+        <br>
+        <textarea rows="20" cols="100" maxlength="2000" id="txtMetas"></textarea>
+        <br>
+        <br>
+        <p style="margin-left: 400px; color: aliceblue;">Markdown? <input type="checkbox" class="form-check-input"
+                id="cbMarkDownMetas" style="margin-left: 15px;"> <label class="form-check-label" for="cbMarkDownMetas"
+                style="color: aliceblue;"> Sim, usei markdown </label></p>
+        <br>
+        <br>
+        <br>
+        <label style="color: aliceblue; margin-left: 400px; font-size: 30px;">Ações esperadas: </label>
+        <br>
+        <br>
+        <br>
+        <textarea rows="20" cols="100" maxlength="1000" id="txtAcoes"></textarea>
+        <br>
+        <br>
+        <p style="margin-left: 400px; color: aliceblue;">Markdown? <input type="checkbox" class="form-check-input"
+                id="cbMarkDownAcoes" style="margin-left: 15px;"> <label class="form-check-label" for="cbMarkDownAcoes"
+                style="color: aliceblue;"> Sim, usei markdown </label></p>
+        <br>
+        <br>
+        <br>
+        <label style="color: aliceblue; margin-left: 400px; font-size: 30px;">Pontos fortes: </label>
+        <br>
+        <br>
+        <br>
+        <textarea rows="20" cols="100" maxlength="1000" id="txtFortes"></textarea>
+        <br>
+        <br>
+        <p style="margin-left: 400px; color: aliceblue;">Markdown? <input type="checkbox" class="form-check-input"
+                id="cbMarkDownFortes" style="margin-left: 15px;"> <label class="form-check-label" for="cbMarkDownFortes"
+                style="color: aliceblue;"> Sim, usei markdown </label></p>
+        <br>
+        <br>
+        <br>
+        <label style="color: aliceblue; margin-left: 400px; font-size: 30px;">Pontos fracos: </label>
+        <br>
+        <br>
+        <br>
+        <textarea rows="20" cols="100" maxlength="1000" id="txtFracos"></textarea>
+        <br>
+        <br>
+        <p style="margin-left: 400px; color: aliceblue;">Markdown? <input type="checkbox" class="form-check-input"
+                id="cbMarkDownFracos" style="margin-left: 15px;"> <label class="form-check-label" for="cbMarkDownFracos"
+                style="color: aliceblue;"> Sim, usei markdown </label></p>
+        <br>
+        <br>
+        <p style="margin-left: 400px; color: aliceblue;">Meses para cumprimento: <input type="number"
+                class="form-control" style="width: 75px;" id="prazo"></p>
+        <br>
+        <br>
+        <button class="btn btn-success" onclick="enviar()" style="margin-left: 400px;">Enviar feedback</button>
+        <br>
+        <br>
+    </main>
+</body>
+<script>
+    // https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+
+    window.addEventListener("DOMContentLoaded", function () {
+
+        let token = sessionStorage.getItem("token");
+        fetch('http://localhost:4444/api/v1/verifyAuth//checkAuthentication', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(json => {
+                if (json.msg == 'Tudo certo!') {
+                    sessionStorage.setItem("RELogado", json.re);
+                    sessionStorage.setItem("Role", json.role);
+                    sessionStorage.setItem("Departamento", json.departamento);
+
+                    if (json.role == 'adm' || json.role == 'gestor') {
+                        return;
+                    }
+                }
+                else {
+                    window.location.href = './authError.html';
+                }
+            })
+            .catch(erro => {
+                console.log(erro);
+                window.location.href = './authError.html';
+            })
+
+    }, false);
+
+    class FeedBack {
+        constructor(RE_COLABORADOR, RE_GESTOR, PONTOS_FORTES, PONTOS_FRACOS, ACOES_ESPERADAS, METAS, DATA_FEEDBACK, PRAZO_CUMPRIMENTO, PONTOS_FORTES_MARKDOWN, PONTOS_FRACOS_MARKDOWN, ACOES_MARKDOWN, METAS_MARKDOWN){
+            this.RE_COLABORADOR = RE_COLABORADOR;
+            this.RE_GESTOR = RE_GESTOR;
+            this.PONTOS_FORTES = PONTOS_FORTES;
+            this.PONTOS_FRACOS = PONTOS_FRACOS;
+            this.ACOES_ESPERADAS = ACOES_ESPERADAS;
+            this.METAS = METAS;
+            this.DATA_FEEDBACK = DATA_FEEDBACK;
+            this.PRAZO_CUMPRIMENTO = PRAZO_CUMPRIMENTO;
+            this.PONTOS_FORTES_MARKDOWN = PONTOS_FORTES_MARKDOWN;
+            this.PONTOS_FRACOS_MARKDOWN = PONTOS_FRACOS_MARKDOWN;
+            this.ACOES_MARKDOWN = ACOES_MARKDOWN;
+            this.METAS_MARKDOWN = METAS_MARKDOWN;
+        }
+    }
+
+    function enviar() {
+
+        let reInserido = document.getElementById('txtRE').value;
+        let metas = document.getElementById('txtMetas').value;
+        let acoes = document.getElementById('txtAcoes').value;
+        let ptFortes = document.getElementById('txtFortes').value;
+        let ptFracos = document.getElementById('txtFracos').value;
+        let prazo = document.getElementById('prazo').value;
+        let data = new Date();
+        let dataFeedback = new Date(); //data.getFullYear() + '/' + data.getMonth() + '/' + data.getDate();
+        let mkdown1 = false;
+        let mkdown2 = false;
+        let mkdown3 = false;
+        let mkdown4 = false;
+
+        let objeto = new FeedBack (reInserido, sessionStorage.getItem('RELogado'), ptFortes, ptFracos, acoes, metas, dataFeedback, prazo, mkdown1, mkdown2, mkdown3, mkdown4);
+
+        fetch('http://localhost:4444/api/v1/feedbacks/inserir', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objeto)
+        })
+        .then(resposta => {
+            if (resposta.status == 200){
+                alert('Feedback inserido no banco!')
+                return;
+            }
+
+            else{
+                console.log(resposta.body);
+            }
+        })
+        .catch(erro => { console.log(erro); });
+    }
+
+
+</script>
+
+</html>
